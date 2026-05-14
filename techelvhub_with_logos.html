@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechElvHub</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a0f;--bg2:#111118;--bg3:#18181f;--bg4:#1e1e28;
+    --border:#2a2a38;--border2:#3a3a50;
+    --text:#f0f0f5;--text2:#9090a8;--text3:#5a5a72;
+    --gold:#d4a843;--gold2:#f0c060;--gold3:#a07828;
+    --green:#2ecc71;--red:#e74c3c;
+    --radius:12px;--radius2:8px;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;line-height:1.5}
+  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.5px;color:var(--text)}
+  .logo span{color:var(--gold)}
+  .cart-btn{background:var(--gold3);border:none;color:#0a0a0f;padding:8px 18px;border-radius:var(--radius2);font-family:'Syne',sans-serif;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background 0.2s}
+  .cart-btn:hover{background:var(--gold)}
+  .cart-count{background:#0a0a0f;color:var(--gold);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;min-width:20px}
+  .hero{padding:52px 24px 36px;text-align:center;background:linear-gradient(180deg,#0f0f18 0%,var(--bg) 100%);position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(212,168,67,0.08) 0%,transparent 70%);pointer-events:none}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.25);color:var(--gold);padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;margin-bottom:16px}
+  .hero h1{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;letter-spacing:-1px;line-height:1.1;color:var(--text)}
+  .hero h1 span{color:var(--gold)}
+  .hero p{color:var(--text2);font-size:15px;margin-top:10px;max-width:420px;margin-left:auto;margin-right:auto}
+  .search-wrap{padding:16px 24px 0;background:var(--bg);max-width:700px;margin:0 auto}
+  .search-box{display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:11px 16px;transition:border-color 0.2s}
+  .search-box:focus-within{border-color:var(--gold3)}
+  .search-box i{font-size:18px;color:var(--text3)}
+  .search-box input{background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;flex:1;width:100%}
+  .search-box input::placeholder{color:var(--text3)}
+  .search-clear{background:none;border:none;color:var(--text3);cursor:pointer;padding:0;display:none;font-size:16px;line-height:1}
+  .search-clear.visible{display:flex}
+  .tabs-wrap{background:var(--bg);border-bottom:1px solid var(--border);padding:14px 24px 0;overflow-x:auto;scrollbar-width:none}
+  .tabs-wrap::-webkit-scrollbar{display:none}
+  .tabs{display:flex;gap:8px;width:max-content}
+  .tab{background:none;border:1px solid var(--border);color:var(--text2);padding:8px 16px;border-radius:var(--radius2);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:'Inter',sans-serif}
+  .tab:hover{border-color:var(--border2);color:var(--text)}
+  .tab.active{background:rgba(212,168,67,0.12);border-color:var(--gold3);color:var(--gold)}
+  .products-section{padding:28px 24px;max-width:1200px;margin:0 auto}
+  .section-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:36px}
+
+  /* CARD */
+  .card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:18px;transition:all 0.2s;position:relative;overflow:hidden}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold3),transparent);opacity:0;transition:opacity 0.2s}
+  .card:hover{border-color:var(--border2);background:var(--bg4);transform:translateY(-2px)}
+  .card:hover::before{opacity:1}
+
+  /* LOGO HEADER */
+  .card-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .product-logo{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:var(--bg2);border:1px solid var(--border)}
+  .product-logo img{width:24px;height:24px;object-fit:contain;filter:brightness(1.1)}
+  .product-logo.colored{border:none}
+  .card-title-wrap{flex:1;min-width:0}
+  .card-name{font-family:'Syne',sans-serif;font-weight:600;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card-info-tag{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px;margin-top:2px}
+
+  .sim-instructions{background:rgba(212,168,67,0.07);border:1px solid rgba(212,168,67,0.2);border-radius:var(--radius2);padding:12px 14px;margin-bottom:12px;font-size:13px}
+  .sim-title{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .sim-steps{list-style:none;display:flex;flex-direction:column;gap:5px}
+  .sim-steps li{color:var(--text2);display:flex;align-items:flex-start;gap:6px;font-size:12px;line-height:1.4}
+  .sim-note{margin-top:8px;padding-top:8px;border-top:1px solid rgba(212,168,67,0.15);color:var(--text3);font-size:11px;line-height:1.5}
+  .variants{display:flex;flex-direction:column;gap:6px}
+  .variant{display:flex;justify-content:space-between;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:8px 12px;transition:all 0.2s;cursor:pointer}
+  .variant:hover{border-color:var(--gold3);background:rgba(212,168,67,0.06)}
+  .variant.selected{border-color:var(--gold);background:rgba(212,168,67,0.12)}
+  .variant-period{font-size:12px;color:var(--text2)}
+  .variant-price{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--gold)}
+  .add-btn{margin-top:12px;width:100%;background:var(--bg4);border:1px solid var(--border2);color:var(--text2);padding:9px;border-radius:var(--radius2);font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;font-family:'Inter',sans-serif}
+  .add-btn:hover{background:rgba(212,168,67,0.12);border-color:var(--gold3);color:var(--gold)}
+  .add-btn.added{background:rgba(46,204,113,0.1);border-color:rgba(46,204,113,0.4);color:var(--green)}
+  .no-results{text-align:center;padding:80px 0;color:var(--text3)}
+  .no-results i{font-size:48px;display:block;margin-bottom:12px;opacity:0.5}
+
+  /* DRAWER */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.3s}
+  .overlay.open{opacity:1;pointer-events:all}
+  .drawer{position:fixed;right:0;top:0;bottom:0;width:min(440px,100vw);background:var(--bg2);border-left:1px solid var(--border);z-index:201;transform:translateX(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+  .drawer.open{transform:translateX(0)}
+  .drawer-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+  .drawer-head h2{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--text);display:flex;align-items:center;gap:8px}
+  .close-btn{background:none;border:none;color:var(--text2);cursor:pointer;font-size:22px;display:flex;padding:4px;transition:color 0.2s}
+  .close-btn:hover{color:var(--text)}
+  .drawer-body{flex:1;overflow-y:auto;padding:16px 24px}
+  .drawer-empty{color:var(--text3);font-size:14px;text-align:center;padding:60px 0}
+  .drawer-empty i{font-size:40px;display:block;margin-bottom:12px;opacity:0.4}
+  .cart-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);padding:14px;margin-bottom:10px}
+  .cart-item-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .cart-item-logo{width:30px;height:30px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+  .cart-item-logo img{width:18px;height:18px;object-fit:contain}
+  .cart-item-name{font-family:'Syne',sans-serif;font-weight:600;font-size:14px;color:var(--text)}
+  .cart-item-variant{font-size:12px;color:var(--text2);margin-bottom:6px}
+  .cart-item-price{font-family:'Syne',sans-serif;color:var(--gold);font-weight:700;font-size:15px;margin-bottom:10px}
+  .info-field label{font-size:11px;color:var(--text3);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:1px}
+  .info-field input{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:var(--radius2);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+  .info-field input:focus{border-color:var(--gold3)}
+  .info-field input.error{border-color:var(--red)}
+  .info-hint{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.5;display:flex;gap:5px;align-items:flex-start}
+  .remove-cart{background:none;border:none;color:var(--text3);cursor:pointer;font-size:12px;display:flex;align-items:center;gap:4px;margin-top:10px;padding:0;transition:color 0.2s;font-family:'Inter',sans-serif}
+  .remove-cart:hover{color:var(--red)}
+  .drawer-footer{padding:16px 24px;border-top:1px solid var(--border);flex-shrink:0}
+  .checkout-note{font-size:12px;color:var(--text3);margin-bottom:12px;text-align:center;display:flex;align-items:center;justify-content:center;gap:5px}
+  .checkout-btn{width:100%;background:var(--gold);border:none;color:#0a0a0f;padding:14px;border-radius:var(--radius);font-family:'Syne',sans-serif;font-weight:800;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.2s}
+  .checkout-btn:hover{background:var(--gold2)}
+
+  /* ADMIN */
+  .admin-toggle{position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:10px 18px;border-radius:30px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;z-index:50;transition:all 0.2s;font-family:'Inter',sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+  .admin-toggle:hover{border-color:var(--border2);color:var(--text)}
+  .admin-panel{position:fixed;bottom:70px;right:24px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;width:350px;z-index:51;display:none;max-height:80vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.5)}
+  .admin-panel.open{display:block}
+  .admin-panel h3{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:16px;color:var(--gold);display:flex;align-items:center;gap:6px}
+  .admin-field{margin-bottom:12px}
+  .admin-field label{font-size:11px;color:var(--text3);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:1px}
+  .admin-field input,.admin-field select{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:9px 10px;border-radius:var(--radius2);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+  .admin-field input:focus,.admin-field select:focus{border-color:var(--gold3)}
+  .admin-field select option{background:var(--bg2)}
+  .admin-add-btn{width:100%;background:var(--gold3);border:none;color:#0a0a0f;padding:11px;border-radius:var(--radius2);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin-top:6px;transition:background 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+  .admin-add-btn:hover{background:var(--gold)}
+  .variant-row{display:flex;gap:6px;margin-bottom:6px}
+  .variant-row input{flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:var(--radius2);font-size:12px;font-family:'Inter',sans-serif;outline:none}
+  .variant-row button{background:none;border:1px solid var(--border);color:var(--text3);padding:8px 10px;border-radius:var(--radius2);cursor:pointer;font-size:14px;transition:all 0.2s}
+  .variant-row button:hover{border-color:var(--red);color:var(--red)}
+  .add-variant-btn{background:none;border:1px dashed var(--border2);color:var(--text3);padding:8px;border-radius:var(--radius2);font-size:12px;cursor:pointer;width:100%;transition:all 0.2s;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:4px}
+  .add-variant-btn:hover{border-color:var(--gold3);color:var(--gold)}
+  .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:10px 22px;border-radius:30px;font-size:13px;z-index:300;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  footer{text-align:center;padding:32px 24px;color:var(--text3);font-size:12px;border-top:1px solid var(--border);margin-top:20px}
+  footer span{color:var(--gold)}
+  @media(max-width:600px){.hero h1{font-size:30px}.products-section{padding:20px 14px}.search-wrap{padding:12px 14px 0}.tabs-wrap{padding:12px 14px 0}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Tech<span>Elv</span>Hub</div>
+  <button class="cart-btn" onclick="toggleCart()">
+    <i class="ti ti-shopping-cart" aria-hidden="true"></i> Cart
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge"><i class="ti ti-bolt" aria-hidden="true"></i> Instant Digital Subscriptions</div>
+  <h1>Premium Digital<br><span>Products & Plans</span></h1>
+  <p>Browse, pick your plan, and get set up in minutes via WhatsApp.</p>
+</div>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <i class="ti ti-search" aria-hidden="true"></i>
+    <input type="text" id="searchInput" placeholder="Search products, e.g. ChatGPT, Canva, VPN..." oninput="onSearch(this.value)">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()"><i class="ti ti-x"></i></button>
+  </div>
+</div>
+
+<div class="tabs-wrap"><div class="tabs" id="tabs"></div></div>
+<div class="products-section" id="productsSection"></div>
+
+<footer><span>TechElvHub</span> &mdash; All orders processed via WhatsApp &nbsp;·&nbsp; &copy; 2025</footer>
+
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2><i class="ti ti-shopping-bag" aria-hidden="true"></i>Your Cart</h2>
+    <button class="close-btn" onclick="toggleCart()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-footer">
+    <p class="checkout-note"><i class="ti ti-brand-whatsapp" style="color:#25d366;font-size:16px"></i>Redirected to WhatsApp to complete your order</p>
+    <button class="checkout-btn" onclick="checkout()"><i class="ti ti-brand-whatsapp"></i> Order via WhatsApp</button>
+  </div>
+</div>
+
+<button class="admin-toggle" onclick="toggleAdmin()"><i class="ti ti-settings"></i> Add Product</button>
+<div class="admin-panel" id="adminPanel">
+  <h3><i class="ti ti-package"></i>Add New Product</h3>
+  <div class="admin-field"><label>Product Name</label><input type="text" id="newName" placeholder="e.g. Netflix Premium"></div>
+  <div class="admin-field"><label>Category</label>
+    <select id="newCategory">
+      <option value="X Premium">X Premium</option><option value="AI Assistant">AI Assistant</option>
+      <option value="Productivity">Productivity</option><option value="Creative & Design">Creative & Design</option>
+      <option value="Encrypted Access">Encrypted Access</option><option value="Writing & Productivity">Writing & Productivity</option>
+      <option value="Entertainment & Streaming">Entertainment & Streaming</option><option value="Gaming">Gaming</option><option value="Data Plan">Data Plan</option>
+    </select>
+  </div>
+  <div class="admin-field"><label>Customer Provides</label>
+    <select id="newInfoType">
+      <option value="email">Email Address</option><option value="username">X Username</option>
+      <option value="sim_mtn">MTN SIM Serial Number</option><option value="sim_airtel">Airtel SIM Serial Number</option>
+    </select>
+  </div>
+  <div class="admin-field"><label>Logo URL (optional)</label><input type="text" id="newLogo" placeholder="https://..."></div>
+  <div class="admin-field"><label>Plans / Variants</label>
+    <div id="adminVariants">
+      <div class="variant-row">
+        <input type="text" placeholder="Period"><input type="text" placeholder="Price">
+        <button onclick="removeVariantRow(this)"><i class="ti ti-x"></i></button>
+      </div>
+    </div>
+    <button class="add-variant-btn" onclick="addVariantRow()"><i class="ti ti-plus"></i> Add another plan</button>
+  </div>
+  <button class="admin-add-btn" onclick="addProduct()"><i class="ti ti-plus"></i> Add to Store</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const WA='2347085208617';
+const SI='https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/';
+
+// logo: Simple Icons slug OR full URL
+const LOGO={
+  'xp1':{slug:'x',bg:'#000'},
+  'xp2':{slug:'x',bg:'#000'},
+  'ai1':{slug:'google',bg:'#fff'},
+  'ai2':{slug:'openai',bg:'#000'},
+  'ai3':{slug:'openai',bg:'#000'},
+  'ai4':{slug:'perplexity',bg:'#1fb8cd'},
+  'ai5':{slug:'x',bg:'#000'},
+  'ai6':{slug:'x',bg:'#000'},
+  'ai7':{slug:'',bg:'#1a1a2e',icon:'ti-robot'},
+  'ai8':{slug:'replit',bg:'#f26207'},
+  'ai9':{slug:'',bg:'#1a1a2e',icon:'ti-bolt'},
+  'ai10':{slug:'',bg:'#6c63ff',icon:'ti-presentation'},
+  'ai11':{slug:'',bg:'#ff4d6d',icon:'ti-heart'},
+  'ai12':{slug:'google',bg:'#fff'},
+  'pr1':{slug:'notion',bg:'#fff'},
+  'pr2':{slug:'cursor',bg:'#000'},
+  'pr3':{slug:'netlify',bg:'#00c7b7'},
+  'pr4':{slug:'github',bg:'#181717'},
+  'cd1':{slug:'elevenlabs',bg:'#000'},
+  'cd2':{slug:'capcut',bg:'#000'},
+  'cd3':{slug:'adobe',bg:'#ff0000'},
+  'cd4':{slug:'canva',bg:'#00c4cc'},
+  'cd5':{slug:'figma',bg:'#f24e1e'},
+  'ea1':{slug:'protonvpn',bg:'#6d4aff'},
+  'ea2':{slug:'expressvpn',bg:'#da3940'},
+  'ea3':{slug:'surfshark',bg:'#1ad3bd'},
+  'ea4':{slug:'surfshark',bg:'#1ad3bd'},
+  'ea5':{slug:'mcafee',bg:'#c01818'},
+  'ea6':{slug:'tradingview',bg:'#2962ff'},
+  'wp1':{slug:'coursera',bg:'#0056d2'},
+  'wp2':{slug:'grammarly',bg:'#15c39a'},
+  'wp3':{slug:'microsoftoffice',bg:'#e74c1c'},
+  'wp4':{slug:'linkedin',bg:'#0a66c2'},
+  'wp5':{slug:'linkedin',bg:'#0a66c2'},
+  'es1':{slug:'amazonprime',bg:'#00a8e0'},
+  'es2':{slug:'crunchyroll',bg:'#f47521'},
+  'es3':{slug:'appletv',bg:'#000'},
+  'es4':{slug:'',bg:'#e50914',icon:'ti-device-tv'},
+  'gm1':{slug:'xbox',bg:'#107c10'},
+  'dp1':{slug:'',bg:'#0050a0',icon:'ti-sim-card'},
+  'dp2':{slug:'',bg:'#e2001a',icon:'ti-sim-card'},
+  'dp3':{slug:'',bg:'#ffcc00',icon:'ti-sim-card'},
+};
+
+function logoHTML(id,size=38,imgSize=22){
+  const l=LOGO[id];
+  if(!l) return `<div class="product-logo" style="width:${size}px;height:${size}px"><i class="ti ti-box" style="font-size:${imgSize}px;color:var(--text3)"></i></div>`;
+  if(l.icon) return `<div class="product-logo colored" style="width:${size}px;height:${size}px;background:${l.bg};border-radius:${size>32?'10px':'8px'}"><i class="ti ${l.icon}" style="font-size:${imgSize}px;color:#fff"></i></div>`;
+  if(l.url) return `<div class="product-logo colored" style="width:${size}px;height:${size}px;background:${l.bg||'#111'};border-radius:${size>32?'10px':'8px'}"><img src="${l.url}" style="width:${imgSize}px;height:${imgSize}px;object-fit:contain"></div>`;
+  const svgUrl=`${SI}${l.slug}.svg`;
+  return `<div class="product-logo colored" style="width:${size}px;height:${size}px;background:${l.bg};border-radius:${size>32?'10px':'8px'}"><img src="${svgUrl}" style="width:${imgSize}px;height:${imgSize}px;object-fit:contain;filter:brightness(0) invert(1)" onerror="this.parentElement.innerHTML='<i class=\\'ti ti-box\\' style=\\'font-size:${imgSize}px;color:#fff\\'></i>'"></div>`;
+}
+
+const SIM_INSTRUCTIONS={
+  sim_mtn:{title:'How to activate MTN 120GB plan',steps:['Buy a new MTN SIM',"Don't register it",'Type the serial number in the space provided'],note:'📌 MTN Router or Supported Universal MiFi is required to use this data plan.'},
+  sim_airtel:{title:'How to activate Airtel 100GB plan',steps:['Buy a new Airtel SIM',"Don't register it",'Type the serial number in the space provided'],note:'📌 An Airtel-compatible router or Universal MiFi device is required.'}
+};
+
+const PRODUCTS=[
+  {id:'xp1',cat:'X Premium',name:'X Premium',infoType:'username',variants:[{period:'3 Months',price:'$11'},{period:'6 Months',price:'$15'},{period:'12 Months',price:'$33'}]},
+  {id:'xp2',cat:'X Premium',name:'X Premium Plus',infoType:'username',variants:[{period:'3 Months',price:'$27'},{period:'6 Months',price:'$35'},{period:'12 Months',price:'$45'}]},
+  {id:'ai1',cat:'AI Assistant',name:'Gemini Pro',infoType:'email',variants:[{period:'1.5 Years',price:'₦35,000'}]},
+  {id:'ai2',cat:'AI Assistant',name:'ChatGPT Plus (Private)',infoType:'email',variants:[{period:'Monthly',price:'₦16,000'}]},
+  {id:'ai3',cat:'AI Assistant',name:'ChatGPT Plus (Shared)',infoType:'email',variants:[{period:'Monthly',price:'₦11,000'}]},
+  {id:'ai4',cat:'AI Assistant',name:'Perplexity Pro',infoType:'email',variants:[{period:'Monthly',price:'₦16,000'},{period:'Yearly',price:'₦53,000'}]},
+  {id:'ai5',cat:'AI Assistant',name:'SuperGrok',infoType:'email',variants:[{period:'Monthly',price:'₦28,000'}]},
+  {id:'ai6',cat:'AI Assistant',name:'Grok',infoType:'email',variants:[{period:'Monthly',price:'₦23,000'}]},
+  {id:'ai7',cat:'AI Assistant',name:'Manus AI',infoType:'email',variants:[{period:'Yearly',price:'₦93,000'}]},
+  {id:'ai8',cat:'AI Assistant',name:'Replit',infoType:'email',variants:[{period:'Yearly',price:'₦88,000'}]},
+  {id:'ai9',cat:'AI Assistant',name:'Bolt AI',infoType:'email',variants:[{period:'Yearly',price:'₦83,000'}]},
+  {id:'ai10',cat:'AI Assistant',name:'Beautiful AI',infoType:'email',variants:[{period:'Yearly',price:'₦43,000'}]},
+  {id:'ai11',cat:'AI Assistant',name:'Lovable AI',infoType:'email',variants:[{period:'3 Months',price:'₦43,000'},{period:'Yearly',price:'₦163,000'}]},
+  {id:'ai12',cat:'AI Assistant',name:'Google AI Pro',infoType:'email',variants:[{period:'4 Months',price:'₦26,000'},{period:'Yearly',price:'₦43,000'}]},
+  {id:'pr1',cat:'Productivity',name:'Notion Pro',infoType:'email',variants:[{period:'Yearly',price:'₦23,000'}]},
+  {id:'pr2',cat:'Productivity',name:'Cursor AI',infoType:'email',variants:[{period:'Yearly',price:'₦93,000'}]},
+  {id:'pr3',cat:'Productivity',name:'Netlify Pro',infoType:'email',variants:[{period:'Monthly',price:'₦13,000'}]},
+  {id:'pr4',cat:'Productivity',name:'GitHub Student Developer Pack',infoType:'email',variants:[{period:'One-time',price:'₦18,000'}]},
+  {id:'cd1',cat:'Creative & Design',name:'Eleven Labs Creator',infoType:'email',variants:[{period:'Monthly',price:'₦23,000'}]},
+  {id:'cd2',cat:'Creative & Design',name:'CapCut Pro',infoType:'email',variants:[{period:'Monthly',price:'₦16,000'},{period:'Yearly',price:'₦73,000'}]},
+  {id:'cd3',cat:'Creative & Design',name:'Adobe Creative Cloud',infoType:'email',variants:[{period:'4 Months',price:'₦40,000'},{period:'Yearly',price:'₦88,000'}]},
+  {id:'cd4',cat:'Creative & Design',name:'Canva Pro (Admin)',infoType:'email',variants:[{period:'Yearly',price:'₦33,000'}]},
+  {id:'cd5',cat:'Creative & Design',name:'Figma / Figma Edu',infoType:'email',variants:[{period:'Monthly',price:'₦15,000'},{period:'1–2 Years',price:'₦53,000'}]},
+  {id:'ea1',cat:'Encrypted Access',name:'Proton VPN Unlimited',infoType:'email',variants:[{period:'2 Years',price:'₦155,000'}]},
+  {id:'ea2',cat:'Encrypted Access',name:'ExpressVPN',infoType:'email',variants:[{period:'3 Months',price:'₦18,000'}]},
+  {id:'ea3',cat:'Encrypted Access',name:'Surfshark VPN (Personal)',infoType:'email',variants:[{period:'Yearly',price:'₦73,000'},{period:'2 Years',price:'₦123,000'}]},
+  {id:'ea4',cat:'Encrypted Access',name:'Surfshark VPN (Shared)',infoType:'email',variants:[{period:'Yearly',price:'₦43,000'}]},
+  {id:'ea5',cat:'Encrypted Access',name:'McAfee (Antivirus + VPN)',infoType:'email',variants:[{period:'Monthly',price:'₦18,000'}]},
+  {id:'ea6',cat:'Encrypted Access',name:'TradingView Premium',infoType:'email',variants:[{period:'Monthly',price:'₦16,000'},{period:'2 Months',price:'₦32,000'},{period:'6 Months',price:'₦53,000'},{period:'Yearly',price:'₦93,000'}]},
+  {id:'wp1',cat:'Writing & Productivity',name:'Coursera',infoType:'email',variants:[{period:'Yearly',price:'₦35,000'}]},
+  {id:'wp2',cat:'Writing & Productivity',name:'Grammarly Premium',infoType:'email',variants:[{period:'Yearly',price:'₦50,000'}]},
+  {id:'wp3',cat:'Writing & Productivity',name:'Microsoft 365 Premium',infoType:'email',variants:[{period:'Yearly',price:'₦50,000'}]},
+  {id:'wp4',cat:'Writing & Productivity',name:'LinkedIn Premium Career',infoType:'email',variants:[{period:'Yearly',price:'₦90,000'}]},
+  {id:'wp5',cat:'Writing & Productivity',name:'LinkedIn Premium Business',infoType:'email',variants:[{period:'Yearly',price:'₦100,000'}]},
+  {id:'es1',cat:'Entertainment & Streaming',name:'Amazon Prime Video',infoType:'email',variants:[{period:'3 Months',price:'₦9,000'},{period:'6 Months',price:'₦15,000'},{period:'Yearly',price:'₦27,000'}]},
+  {id:'es2',cat:'Entertainment & Streaming',name:'Crunchyroll',infoType:'email',variants:[{period:'Yearly',price:'₦30,000'}]},
+  {id:'es3',cat:'Entertainment & Streaming',name:'Apple TV',infoType:'email',variants:[{period:'3 Months',price:'₦25,000'}]},
+  {id:'es4',cat:'Entertainment & Streaming',name:'Maxstream TV',infoType:'email',variants:[{period:'Yearly',price:'₦85,000'}]},
+  {id:'gm1',cat:'Gaming',name:'Xbox Game Pass Ultimate',infoType:'email',variants:[{period:'3 Months',price:'₦60,000'}]},
+  {id:'dp1',cat:'Data Plan',name:'eSIM USA',infoType:'email',variants:[{period:'Yearly',price:'₦100,000'}]},
+  {id:'dp2',cat:'Data Plan',name:'Airtel 100GB',infoType:'sim_airtel',variants:[{period:'Monthly',price:'₦18,000'}]},
+  {id:'dp3',cat:'Data Plan',name:'MTN 120GB',infoType:'sim_mtn',variants:[{period:'Monthly',price:'₦19,000'}]},
+];
+
+const CATS=['All','X Premium','AI Assistant','Productivity','Creative & Design','Encrypted Access','Writing & Productivity','Entertainment & Streaming','Gaming','Data Plan'];
+const infoLabel={email:'Email Address',username:'X Username (@handle)',sim_mtn:'MTN SIM Serial Number',sim_airtel:'Airtel SIM Serial Number'};
+const infoPlaceholder={email:'Enter your email address',username:'Enter your X username (e.g. @johndoe)',sim_mtn:'Enter the serial number on your new unregistered MTN SIM card',sim_airtel:'Enter the serial number on your new unregistered Airtel SIM card'};
+const infoIcon={email:'ti-mail',username:'ti-at',sim_mtn:'ti-sim-card',sim_airtel:'ti-sim-card'};
+
+let cart=[],activeTab='All',selectedVariants={},searchQuery='';
+
+function onSearch(val){searchQuery=val.trim().toLowerCase();document.getElementById('searchClear').classList.toggle('visible',searchQuery.length>0);if(searchQuery)activeTab='All';renderTabs();renderProducts();}
+function clearSearch(){document.getElementById('searchInput').value='';searchQuery='';document.getElementById('searchClear').classList.remove('visible');renderProducts();}
+function getFiltered(){let l=activeTab==='All'?PRODUCTS:PRODUCTS.filter(p=>p.cat===activeTab);if(searchQuery)l=l.filter(p=>p.name.toLowerCase().includes(searchQuery)||p.cat.toLowerCase().includes(searchQuery));return l;}
+function renderTabs(){document.getElementById('tabs').innerHTML=CATS.map(c=>`<button class="tab${c===activeTab?' active':''}" onclick="setTab('${c}')">${c}</button>`).join('');}
+function setTab(tab){activeTab=tab;searchQuery='';document.getElementById('searchInput').value='';document.getElementById('searchClear').classList.remove('visible');renderTabs();renderProducts();}
+function simBox(type){const s=SIM_INSTRUCTIONS[type];if(!s)return '';return `<div class="sim-instructions"><div class="sim-title"><i class="ti ti-info-circle" style="font-size:13px"></i>${s.title}</div><ul class="sim-steps">${s.steps.map(st=>`<li><span>✅</span><span>${st}</span></li>`).join('')}</ul><div class="sim-note">${s.note}</div></div>`;}
+
+function renderProducts(){
+  const sec=document.getElementById('productsSection');
+  const filtered=getFiltered();
+  if(!filtered.length){sec.innerHTML=`<div class="no-results"><i class="ti ti-search-off"></i><p>No products found for "<strong>${searchQuery||activeTab}</strong>"</p></div>`;return;}
+  const grouped={};
+  filtered.forEach(p=>{if(!grouped[p.cat])grouped[p.cat]=[];grouped[p.cat].push(p);});
+  sec.innerHTML=Object.entries(grouped).map(([cat,prods])=>`<div class="section-label">${cat}</div><div class="grid">${prods.map(renderCard).join('')}</div>`).join('');
+}
+
+function renderCard(p){
+  const sv=selectedVariants[p.id]||0,inCart=cart.some(c=>c.id===p.id);
+  return `<div class="card" id="card-${p.id}">
+    <div class="card-header">
+      ${logoHTML(p.id)}
+      <div class="card-title-wrap">
+        <div class="card-name">${p.name}</div>
+        <div class="card-info-tag"><i class="ti ${infoIcon[p.infoType]}" style="font-size:11px"></i> ${infoLabel[p.infoType]}</div>
+      </div>
+    </div>
+    ${p.infoType.startsWith('sim_')?simBox(p.infoType):''}
+    <div class="variants">${p.variants.map((v,i)=>`<div class="variant${i===sv?' selected':''}" onclick="selectVariant('${p.id}',${i})"><span class="variant-period">${v.period}</span><span class="variant-price">${v.price}</span></div>`).join('')}</div>
+    <button class="add-btn${inCart?' added':''}" onclick="addToCart('${p.id}')">${inCart?`<i class="ti ti-check"></i> Added to Cart`:`<i class="ti ti-plus"></i> Add to Cart`}</button>
+  </div>`;
+}
+
+function selectVariant(id,idx){selectedVariants[id]=idx;document.getElementById('card-'+id)?.querySelectorAll('.variant').forEach((v,i)=>v.classList.toggle('selected',i===idx));}
+function addToCart(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;if(cart.some(c=>c.id===id)){removeFromCart(id);return;}const v=p.variants[selectedVariants[id]||0];cart.push({id,name:p.name,period:v.period,price:v.price,infoType:p.infoType,info:''});updateCartCount();renderProducts();showToast(`${p.name} added to cart`);}
+function removeFromCart(id){cart=cart.filter(c=>c.id!==id);updateCartCount();renderDrawer();renderProducts();}
+function updateCartCount(){document.getElementById('cartCount').textContent=cart.length;}
+function toggleCart(){document.getElementById('drawer').classList.toggle('open');document.getElementById('overlay').classList.toggle('open');renderDrawer();}
+
+function renderDrawer(){
+  const body=document.getElementById('drawerBody');
+  if(!cart.length){body.innerHTML=`<div class="drawer-empty"><i class="ti ti-shopping-cart-off"></i>Your cart is empty</div>`;return;}
+  body.innerHTML=cart.map(item=>{
+    const isSim=item.infoType.startsWith('sim_');
+    const hint=isSim?`<div class="info-hint"><i class="ti ti-info-circle" style="font-size:13px;flex-shrink:0;margin-top:1px"></i>Buy a new unregistered SIM — do not register it. Enter the serial number on the packaging.</div>`:'';
+    const lhtml=logoHTML(item.id,30,18);
+    return `<div class="cart-item">
+      <div class="cart-item-header">${lhtml}<div class="cart-item-name">${item.name}</div></div>
+      <div class="cart-item-variant">${item.period}</div>
+      <div class="cart-item-price">${item.price}</div>
+      <div class="info-field"><label>${infoLabel[item.infoType]}</label>
+        <input type="text" id="info-${item.id}" placeholder="${infoPlaceholder[item.infoType]}" value="${item.info||''}" oninput="updateInfo('${item.id}',this.value)">
+        ${hint}
+      </div>
+      <button class="remove-cart" onclick="removeFromCart('${item.id}')"><i class="ti ti-trash" style="font-size:13px"></i> Remove</button>
+    </div>`;
+  }).join('');
+}
+
+function updateInfo(id,val){const item=cart.find(c=>c.id===id);if(item)item.info=val;}
+function checkout(){
+  const missing=cart.filter(c=>!c.info||!c.info.trim());
+  if(missing.length){missing.forEach(c=>{const inp=document.getElementById('info-'+c.id);if(inp){inp.classList.add('error');setTimeout(()=>inp.classList.remove('error'),2500);}});showToast('Please fill in all required fields');return;}
+  const lines=cart.map(c=>`• ${c.name} (${c.period}) — ${c.price}\n  ${infoLabel[c.infoType]}: ${c.info}`).join('\n\n');
+  const msg=`Hello TechElvHub! 👋\n\nI'd like to order the following:\n\n${lines}\n\nPlease process my order. Thank you!`;
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function toggleAdmin(){document.getElementById('adminPanel').classList.toggle('open');}
+function addVariantRow(){const c=document.getElementById('adminVariants'),r=document.createElement('div');r.className='variant-row';r.innerHTML=`<input type="text" placeholder="Period"><input type="text" placeholder="Price"><button onclick="removeVariantRow(this)"><i class="ti ti-x"></i></button>`;c.appendChild(r);}
+function removeVariantRow(btn){const rows=document.getElementById('adminVariants').querySelectorAll('.variant-row');if(rows.length>1)btn.parentElement.remove();}
+function addProduct(){
+  const name=document.getElementById('newName').value.trim();
+  const cat=document.getElementById('newCategory').value;
+  const infoType=document.getElementById('newInfoType').value;
+  const logoUrl=document.getElementById('newLogo').value.trim();
+  const rows=document.getElementById('adminVariants').querySelectorAll('.variant-row');
+  const variants=[];
+  rows.forEach(r=>{const i=r.querySelectorAll('input');if(i[0].value&&i[1].value)variants.push({period:i[0].value,price:i[1].value});});
+  if(!name||!variants.length){showToast('Fill in product name and at least one plan');return;}
+  const id='c'+Date.now();
+  if(logoUrl) LOGO[id]={url:logoUrl,bg:'#111'};
+  PRODUCTS.push({id,cat,name,infoType,variants});
+  document.getElementById('newName').value='';document.getElementById('newLogo').value='';
+  document.getElementById('adminVariants').innerHTML=`<div class="variant-row"><input type="text" placeholder="Period"><input type="text" placeholder="Price"><button onclick="removeVariantRow(this)"><i class="ti ti-x"></i></button></div>`;
+  renderProducts();toggleAdmin();showToast(`${name} added!`);
+}
+renderTabs();renderProducts();
+</script>
+</body>
+</html>
